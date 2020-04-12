@@ -1,0 +1,147 @@
+\usepackage[T1]{fontenc}
+
+\usepackage{ifxetex}
+
+% USE XeLaTeX if possible so that we can use the official font. Otherwise defaults to Helvetica
+
+\ifxetex
+   \usepackage{fontspec}
+   \setmainfont{Arial}
+   \newfontfamily\witsfont{Helvetica Neue}
+\else
+   \usepackage{helvet}
+   \renewcommand\familydefault{\sfdefault}
+   \newcommand*{\witsfont}{\fontfamily{phv}\selectfont}
+\fi
+
+
+\usepackage[en-MT]{datetime2} % MALTA FTW
+\usepackage{lipsum}
+\usepackage{geometry}
+\usepackage{layout}
+\usepackage{hyperref}
+\usepackage{url}
+\urlstyle{same}
+\usepackage{tabularx,fancyhdr}
+\usepackage[export]{adjustbox}
+\geometry{
+  paper = letterpaper,
+  margin = 0.7in,
+  bottom=1in,
+  includefoot,
+  footskip = 35pt
+}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage[most]{tcolorbox}
+\usepackage{xspace}
+\usepackage{etoolbox}
+
+
+\setlength{\parindent}{0pt}% Remove paragraph indentation
+\setlength{\parskip}{\baselineskip}
+
+\definecolor{wits-blue}{RGB}{0,45,114}
+\newcolumntype{?}{!{{\color{wits-blue}\vrule width 1pt}}}
+
+\fancypagestyle{firstpage}{
+  \fancyhf{}% Clear header/footer
+  \renewcommand{\headrulewidth}{0pt}% Remove header rule
+  \renewcommand{\footrulewidth}{0pt}% Remove footer rule  
+  \fancyfoot[L]{%
+    \witsfooter
+  }
+}
+
+\pagestyle{plain}
+
+% VARIABLES
+\newcommand{\thesubject}{}
+\newcommand{\thedepartment}{}
+\newcommand{\thelocation}{Private Bag 3, WITS, 2050, South Africa}
+\newcommand{\theemail}{}
+\newcommand{\thetelephone}{}
+\newcommand{\thefax}{}
+\newcommand{\thewebsite}{www.wits.ac.za}
+\newcommand{\thesignature}{}
+
+% VARIABLE SETTERS
+\newcommand{\subject}[1]{\renewcommand{\thesubject}{#1}}
+\newcommand{\department}[1]{\renewcommand{\thedepartment}{#1}}
+\newcommand{\location}[1]{\renewcommand{\thelocation}{#1}}
+\newcommand{\email}[1]{\renewcommand{\theemail}{#1}}
+\newcommand{\telephone}[1]{\renewcommand{\thetelephone}{#1}}
+\newcommand{\fax}[1]{\renewcommand{\thefax}{#1}}
+\newcommand{\website}[1]{\renewcommand{\thewebsite}{#1}}
+\newcommand{\signature}[1]{\renewcommand{\thesignature}{#1}}
+
+% COMMANDS
+\newcommand{\subjectline}{\ifdefempty{\thesubject}{}{\underline{\textbf{Re: \thesubject}}}}
+
+\newcommand{\witsletterhead}{
+
+\ifdefempty{\thedepartment}{
+\begin{tabular}{l}
+\raisebox{-.5\height}{\includegraphics[height=2.22cm]{witslogo.jpg}} \\
+\end{tabular} 
+}
+{
+\begin{tabular}{l@{\hskip 0.75cm}?@{\hskip 0.75cm}l}
+\raisebox{-.5\height}{\includegraphics[height=2.22cm]{witslogo.jpg}} & \fontsize{14pt}{12pt}\selectfont \witsfont \color{wits-blue}\makecell[l]{\thedepartment}\\
+\end{tabular} 
+}
+\vspace*{10mm}
+}
+
+\newcommand{\witsfooter}{
+{
+
+\fontsize{7.5pt}{12pt}\selectfont
+\witsfont
+{
+\color{wits-blue}
+\thelocation\\
+\ifdefempty{\thetelephone}{}{\textbf{T} \href{tel:\thetelephone}{\thetelephone}\xspace|\xspace}
+\ifdefempty{\thefax}{}{\textbf{F} \href{tel:\thefax}{\thefax}\xspace|\xspace}
+\ifdefempty{\theemail}{}{\textbf{E} \href{mailto:\theemail}{\theemail}\xspace|\xspace}
+\url{\thewebsite}
+}
+\vspace*{-0.75\parskip}
+\begin{tcolorbox}[colback=wits-blue,enhanced,sharp corners,frame hidden,halign=center,boxsep=2pt,left=2pt,right=2pt,top=0pt,bottom=0pt,fontupper=\color{white}]
+IYUNIVESITHI YASEWITWATERSRAND | YUNIVESITHI YA WITWATERSRAND
+\end{tcolorbox}
+}
+}
+
+\newcommand{\signatureline}{
+
+\ifdefempty{\thesignature}{
+	\\[8\medskipamount]
+}
+{
+  	\\[2\medskipamount]
+	\noindent\includegraphics[width=2.2cm]{sig}
+  	\\[2\medskipamount]
+}
+}
+
+
+\newenvironment{rightbox}
+    {
+    \hfill
+	\begin{tabular}{@{}l}
+    }
+    % CONTENT
+    {
+	\end{tabular}
+    }
+    
+\newenvironment{leftbox}
+    {
+	\begin{tabular}{@{} l @{}}
+    }
+    % CONTENT
+    {
+	\end{tabular}
+    }
